@@ -1,43 +1,97 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { View, Image } from 'react-native';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+// Import activated and non-activated icons
+import LibraryAIcon from '../../assets/icons/LibraryA.png';
+import LibraryNIcon from '../../assets/icons/LibraryN.png';
+import ScanAIcon from '../../assets/icons/ScanA.png';
+import ScanNIcon from '../../assets/icons/ScanN.png';
+import AboutUSAIcon from '../../assets/icons/AboutUsA.png';
+import AboutUSNIcon from '../../assets/icons/AboutUsN.png';
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+// Define a type for the TabIcon props
+type TabIconProps = {
+  activeIcon: any; // Icon for activated state
+  inactiveIcon: any; // Icon for non-activated state
+  focused: boolean;
+  isScan?: boolean; // Optional prop to style Scan icon differently
+};
 
+// Define TabIcon component to display icon and label
+const TabIcon: React.FC<TabIconProps> = ({ activeIcon, inactiveIcon, focused, isScan }) => {
+  const icon = focused ? activeIcon : inactiveIcon;
+  return (
+    <View
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: isScan ? -30 : 0, // Move Scan icon above
+      }}
+    >
+      <Image
+        source={icon}
+        style={{
+          width: isScan ? 70 : 24, // Larger size for Scan icon
+          height: isScan ? 70 : 24,
+        }}
+      />
+    </View>
+  );
+};
+
+export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+        tabBarStyle: {
+          backgroundColor: '#5DB075', // Set the navigation bar color to green
+        },
+        tabBarLabelStyle: {
+          color: '#FFFFFF', // Set the title color to white
+        },
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="library"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          headerShown: false,
+          title: 'Library',
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              activeIcon={LibraryAIcon}
+              inactiveIcon={LibraryNIcon}
+              focused={focused}
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="mainmenu"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          headerShown: false,
+          title: '',
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              activeIcon={ScanAIcon}
+              inactiveIcon={ScanNIcon}
+              focused={focused}
+              isScan={true} // Set isScan to true for special styling
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="aboutus"
+        options={{
+          headerShown: false,
+          title: 'About Us',
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              activeIcon={AboutUSAIcon}
+              inactiveIcon={AboutUSNIcon}
+              focused={focused}
+            />
+          ),
         }}
       />
     </Tabs>
