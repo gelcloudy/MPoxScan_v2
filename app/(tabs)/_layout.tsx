@@ -54,7 +54,15 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="library"
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#5DB075', 
+          },
+          headerTintColor: '#FFFFFF', // Set the header text color to white
+          headerTitleStyle: {
+            fontSize: 20, // Adjust the font size
+            fontFamily: 'Inter-SemiBold', // Adjust the font family
+          },
           title: 'Library',
           tabBarIcon: ({ focused }) => (
             <TabIcon
@@ -68,7 +76,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="mainmenu"
         options={{
-          headerShown: false,
+          headerShown: true,
           title: '',
           tabBarIcon: ({ focused }) => (
             <TabIcon
@@ -83,7 +91,15 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="aboutus"
         options={{
-          headerShown: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: '#5DB075', 
+          },
+          headerTintColor: '#FFFFFF', // Set the header text color to white
+          headerTitleStyle: {
+            fontSize: 20, // Adjust the font size
+            fontFamily: 'Inter-SemiBold', // Adjust the font family
+          },
           title: 'About Us',
           tabBarIcon: ({ focused }) => (
             <TabIcon
